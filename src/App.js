@@ -1,11 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+//Pages
+import Home from "./Pages/Home";
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Le debut du projet</Text>
-      <StatusBar style="auto" />
+      <Home />
     </View>
   );
 }
@@ -13,8 +13,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#1A1E26',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
