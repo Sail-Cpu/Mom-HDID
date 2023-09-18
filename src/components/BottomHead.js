@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 40,
         paddingLeft: 40,
         paddingRight: 40,
+        paddingTop: 10
     }
 })
 
