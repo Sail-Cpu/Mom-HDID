@@ -1,12 +1,14 @@
 import {View, StyleSheet, Text} from "react-native";
 //Components
 import Calendar from "./Calendar";
+import Temp from "./Temp";
 //Icon
 
 const BottomHead = () => {
     return(
         <View style={styles.container}>
             <Calendar/>
+            <Temp/>
         </View>
     )
 }

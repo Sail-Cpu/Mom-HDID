@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 //Components
-import BottomHead from "../components/BottomHead";
+import BottomHead from "../components/BottomHead/BottomHead";
 
 const Home = () => {
     return(
