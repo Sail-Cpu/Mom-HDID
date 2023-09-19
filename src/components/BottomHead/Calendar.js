@@ -65,6 +65,12 @@ const Calendar = () => {
         }
     }
 
+    function dateClick(date){
+        const newActiveDate = new Date(activeDate);
+        newActiveDate.setDate(date);
+        setActiveDay(newActiveDate);
+    }
+
 
     return(
         <View style={styles.container}>
@@ -87,11 +93,7 @@ const Calendar = () => {
                         const activeDay = date.day === activeDate?.getDate() ? styles.dayActive : styles.day;
 
                         return(
-                            <TouchableOpacity key={idx} style={[styles.date, activeStyle]} onPress={() => {
-                                const newActiveDate = new Date(activeDate);
-                                newActiveDate.setDate(date.day);
-                                setActiveDay(newActiveDate);
-                            }}>
+                            <TouchableOpacity key={idx} style={[styles.date, activeStyle]} onPress={() => dateClick(date.day)}>
                                 <Text style={activeDayString}>{date.dayString.substring(0, 3)}</Text>
                                 <Text style={activeDay}>{date.day}</Text>
                             </TouchableOpacity>
