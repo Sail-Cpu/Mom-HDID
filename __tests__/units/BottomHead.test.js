@@ -12,13 +12,13 @@ describe("Calendar test", () => {
     for(let i = 7; i > 0; i--){
         let previousDate = new Date();
         previousDate.setDate(date.getDate() - i);
-        allDate.push(previousDate.getDate());
+        allDate.push(previousDate);
     }
-    allDate.push(date.getDate());
+    allDate.push(date);
     for(let i = 1; i < 7; i++){
         let previousDate = new Date();
         previousDate.setDate(date.getDate() + i);
-        allDate.push(previousDate.getDate());
+        allDate.push(previousDate);
     }
     test("The previous day when i click on the previous button and vice versa", () => {
         const component = render(<Calendar />);
@@ -50,13 +50,17 @@ describe("Calendar test", () => {
         for(let i = 0; i < 14; i++){
             allComponentDate.push(component.getByTestId(`calendarDate${i}`).props.children);
         }
+        const dates = [];
+        for(let i = 0; i < allDate.length; i++){
+            dates.push(allDate[i].getDate());
+        }
 
-        expect(allComponentDate).toEqual(allDate);
+        expect(allComponentDate).toEqual(dates);
     })
     test("Choose Date", async() => {
         const component = render(<Calendar />);
 
-        const titleDate = component.getByTestId("titleDate");
+        let titleDate = component.getByTestId("titleDate");
         expect(titleDate.props.children).toBe(dayString[date.getDay()]);
 
         const allComponentDate = [];
@@ -72,8 +76,11 @@ describe("Calendar test", () => {
 
         const touchableStyle = allComponentDate[0];
         expect(touchableStyle.props.style.backgroundColor).toBe("");
+
         fireEvent.press(touchableStyle);
         expect(touchableStyle.props.style.backgroundColor).toBe("#fff");
 
+        titleDate = component.getByTestId("titleDate");
+        expect(titleDate.props.children).toBe(dayString[allDate[0].getDay()]);
     })
 })
