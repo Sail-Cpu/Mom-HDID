@@ -84,7 +84,7 @@ const Calendar = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <ScrollView testID='ScrollView' horizontal={true} showsHorizontalScrollIndicator={false} style={styles.calendar}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.calendar}>
                     {twoWeeks().map((date, idx) => {
 
                         const activeStyle = date.day === activeDate.getDate() ? styles.dateActive : null;
@@ -94,7 +94,7 @@ const Calendar = () => {
                         return(
                             <TouchableOpacity key={idx} style={[styles.date, activeStyle]} onPress={() => dateClick(date.day)}>
                                 <Text style={activeDayString}>{date.dayString.substring(0, 3)}</Text>
-                                <Text style={activeDay}>{date.day}</Text>
+                                <Text testID={`calendarDate${idx}`} style={activeDay}>{date.day}</Text>
                             </TouchableOpacity>
                         )
                     })}

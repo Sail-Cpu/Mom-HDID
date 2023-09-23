@@ -2,6 +2,7 @@ import React from 'react';
 import Calendar from "../../src/components/BottomHead/Calendar";
 import { describe, test, expect } from '@jest/globals';
 import { render, fireEvent } from "@testing-library/react-native";
+import {queries} from "@testing-library/react";
 
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon');
 describe("Calendar test", () => {
@@ -27,6 +28,34 @@ describe("Calendar test", () => {
 
         fireEvent.press(nextButton);
         titleDate = component.getByTestId('titleDate');
+
         expect(titleDate.props.children).toBe(dayString[date.getDay()]);
+    })
+    test("test Calendar Tab", () => {
+        const component = render(<Calendar />)
+
+        const allDate = [];
+
+        for(let i = 7; i > 0; i--){
+            let previousDate = new Date();
+            previousDate.setDate(date.getDate() - i);
+            allDate.push(previousDate.getDate());
+        }
+
+        allDate.push(date.getDate());
+
+        for(let i = 1; i < 7; i++){
+            let previousDate = new Date();
+            previousDate.setDate(date.getDate() + i);
+            allDate.push(previousDate.getDate());
+        }
+
+        const allComponentDate = [];
+        for(let i = 0; i < 14; i++){
+            allComponentDate.push(component.getByTestId(`calendarDate${i}`).props.children);
+        }
+
+        expect(allComponentDate).toEqual(allDate);
+
     })
 })
