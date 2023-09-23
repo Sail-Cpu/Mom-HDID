@@ -92,7 +92,7 @@ const Calendar = () => {
                         const activeDay = date.day === activeDate?.getDate() ? styles.dayActive : styles.day;
 
                         return(
-                            <TouchableOpacity key={idx} style={[styles.date, activeStyle]} onPress={() => dateClick(date.day)}>
+                            <TouchableOpacity testID={`touchable${idx}`} key={idx} style={[styles.date, activeStyle]} onPress={() => dateClick(date.day)}>
                                 <Text style={activeDayString}>{date.dayString.substring(0, 3)}</Text>
                                 <Text testID={`calendarDate${idx}`} style={activeDay}>{date.day}</Text>
                             </TouchableOpacity>
@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
     date: {
         display :"flex",
         flexDirection: "column",
+        backgroundColor: "",
         alignItems: "center",
         justifyContent: "space-between",
         marginLeft: 5,

@@ -1,15 +1,27 @@
 import React from 'react';
 import Calendar from "../../src/components/BottomHead/Calendar";
 import { describe, test, expect } from '@jest/globals';
-import { render, fireEvent } from "@testing-library/react-native";
-import {queries} from "@testing-library/react";
+import { render, fireEvent, waitFor } from "@testing-library/react-native";
 
 jest.mock('react-native-vector-icons/MaterialIcons', () => 'Icon');
 describe("Calendar test", () => {
     const date = new Date();
     const dayString = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const allDate = [];
+
+    for(let i = 7; i > 0; i--){
+        let previousDate = new Date();
+        previousDate.setDate(date.getDate() - i);
+        allDate.push(previousDate.getDate());
+    }
+    allDate.push(date.getDate());
+    for(let i = 1; i < 7; i++){
+        let previousDate = new Date();
+        previousDate.setDate(date.getDate() + i);
+        allDate.push(previousDate.getDate());
+    }
     test("The previous day when i click on the previous button and vice versa", () => {
-        const component = render(<Calendar />)
+        const component = render(<Calendar />);
 
         const previousButton = component.getByTestId("previousDay");
         const nextButton = component.getByTestId("nextDay");
@@ -31,24 +43,8 @@ describe("Calendar test", () => {
 
         expect(titleDate.props.children).toBe(dayString[date.getDay()]);
     })
-    test("test Calendar Tab", () => {
-        const component = render(<Calendar />)
-
-        const allDate = [];
-
-        for(let i = 7; i > 0; i--){
-            let previousDate = new Date();
-            previousDate.setDate(date.getDate() - i);
-            allDate.push(previousDate.getDate());
-        }
-
-        allDate.push(date.getDate());
-
-        for(let i = 1; i < 7; i++){
-            let previousDate = new Date();
-            previousDate.setDate(date.getDate() + i);
-            allDate.push(previousDate.getDate());
-        }
+    test("Calendar Tab", () => {
+        const component = render(<Calendar />);
 
         const allComponentDate = [];
         for(let i = 0; i < 14; i++){
@@ -56,6 +52,28 @@ describe("Calendar test", () => {
         }
 
         expect(allComponentDate).toEqual(allDate);
+    })
+    test("Choose Date", async() => {
+        const component = render(<Calendar />);
+
+        const titleDate = component.getByTestId("titleDate");
+        expect(titleDate.props.children).toBe(dayString[date.getDay()]);
+
+        const allComponentDate = [];
+
+        await Promise.all(
+            Array.from({ length: 14 }, (_, i) =>
+                waitFor(() => {
+                    const touchable = component.getByTestId(`touchable${i}`);
+                    allComponentDate.push(touchable);
+                })
+            )
+        );
+
+        const touchableStyle = allComponentDate[0];
+        expect(touchableStyle.props.style.backgroundColor).toBe("");
+        fireEvent.press(touchableStyle);
+        expect(touchableStyle.props.style.backgroundColor).toBe("#fff");
 
     })
 })
