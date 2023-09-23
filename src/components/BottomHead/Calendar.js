@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {View, Text, ScrollView, TouchableOpacity, StyleSheet} from "react-native";
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {act} from "@testing-library/react-native";
 
 const Calendar = () => {
 
@@ -75,17 +74,17 @@ const Calendar = () => {
     return(
         <View style={styles.container}>
             <View style={styles.top}>
-                <Text style={styles.title}>{dayString[activeDate.getDay()]}</Text>
+                <Text testID="titleDate" style={styles.title}>{dayString[activeDate.getDay()]}</Text>
                 <View style={styles.topRight}>
-                    <TouchableOpacity onPress={() => arrowLeftClick()}>
+                    <TouchableOpacity testID="previousDay" onPress={() => arrowLeftClick()}>
                         <Icon name="arrow-back-ios" size={30} color="#fff" />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => arrowRightClick()}>
+                    <TouchableOpacity testID="nextDay" onPress={() => arrowRightClick()}>
                         <Icon name="arrow-forward-ios" size={30} color="#fff" />
                     </TouchableOpacity>
                 </View>
             </View>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={styles.calendar}>
+            <ScrollView testID='ScrollView' horizontal={true} showsHorizontalScrollIndicator={false} style={styles.calendar}>
                     {twoWeeks().map((date, idx) => {
 
                         const activeStyle = date.day === activeDate.getDate() ? styles.dateActive : null;
